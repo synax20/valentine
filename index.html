@@ -14,35 +14,48 @@
       align-items:center;
       justify-content:center;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: radial-gradient(circle at top, #ffe3ec 0%, #ffb3c7 55%, #ff9db7 100%);
+      background: radial-gradient(circle at top, #fff4f6 0%, #f6e6ea 55%, #ead6dc 100%);
       overflow:hidden;
       padding: 18px;
+      color: #2a2a2a;
     }
 
-    /* floating hearts background */
+    /* subtle floating hearts */
     .heart{
       position:absolute;
-      font-size: 22px;
-      opacity:.65;
+      font-size: 18px;
+      opacity:.35;
       animation: floatUp linear infinite;
       user-select:none;
       pointer-events:none;
+      filter: blur(0.2px);
     }
     @keyframes floatUp{
       from { transform: translateY(30vh) scale(1); opacity: 0; }
-      10% { opacity: .7; }
-      to   { transform: translateY(-120vh) scale(1.3); opacity: 0; }
+      15% { opacity: .35; }
+      to   { transform: translateY(-120vh) scale(1.15); opacity: 0; }
     }
 
     .card{
       width:min(560px, 95vw);
-      background: rgba(255,255,255,0.88);
+      background: rgba(255,255,255,0.90);
       backdrop-filter: blur(10px);
       border-radius: 26px;
-      padding: 30px 22px 26px;
-      box-shadow: 0 20px 70px rgba(0,0,0,0.18);
+      padding: 28px 22px 24px;
+      box-shadow: 0 20px 70px rgba(0,0,0,0.14);
       text-align:center;
       position:relative;
+      border: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .sticker{
+      margin: 6px 0 14px;
+      font-size: 46px;
+      animation: pop 1.2s ease-in-out infinite alternate;
+    }
+    @keyframes pop{
+      from { transform: scale(1); }
+      to { transform: scale(1.06); }
     }
 
     .title{
@@ -51,27 +64,27 @@
       letter-spacing: 0.2px;
     }
 
+    .aida{
+      font-weight: 800;
+      color: #c73763; /* muted rose */
+    }
+
     .subtitle{
-      margin: 0 auto 22px;
+      margin: 0 auto 18px;
       max-width: 42ch;
       opacity: 0.85;
       font-size: 16px;
-      line-height: 1.45;
-    }
-
-    .aida{
-      font-weight: 800;
-      color: #ff3b7a;
+      line-height: 1.5;
     }
 
     .buttons{
-      margin-top: 10px;
+      margin-top: 8px;
       display:flex;
       align-items:center;
       justify-content:center;
       gap: 14px;
       position: relative;
-      height: 70px;
+      height: 74px;
     }
 
     button{
@@ -82,54 +95,50 @@
       font-weight: 700;
       cursor:pointer;
       transition: transform .15s ease, box-shadow .15s ease, filter .15s ease;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+      user-select:none;
+      -webkit-tap-highlight-color: transparent;
     }
 
     #yesBtn{
-      background: linear-gradient(135deg, #ff4d88, #ff8bb2);
+      background: linear-gradient(135deg, #d64b78, #e78aa7); /* less neon */
       color:white;
     }
-    #yesBtn:hover{
-      transform: translateY(-2px) scale(1.04);
-      filter: brightness(1.05);
-    }
+    #yesBtn:hover{ transform: translateY(-2px) scale(1.03); }
 
     #noBtn{
       background: #ffffff;
-      color: #ff3b7a;
-      border: 2px solid rgba(255,59,122,0.25);
+      color: #c73763;
+      border: 1px solid rgba(199,55,99,0.25);
+      position: relative; /* starts normal */
+    }
+
+    /* When we switch it to "escape mode", it becomes absolutely positioned */
+    #noBtn.escape{
       position:absolute;
       left: 50%;
-      transform: translateX(60px);
+      top: 18px;
+      transform: translateX(-50%);
+      transition: left 260ms ease, top 260ms ease;
+      will-change: left, top;
     }
 
     .result{
       margin-top: 18px;
       font-size: 18px;
       font-weight: 700;
-      color: #ff2f78;
+      color: #b8335d;
       display:none;
     }
-
     .big{
       font-size: 22px;
       font-weight: 900;
+      margin-bottom: 6px;
     }
-
-    .tiny{
-      margin-top: 10px;
-      font-size: 13px;
-      opacity: 0.65;
-    }
-
-    .sticker{
-      margin: 10px 0 18px;
-      font-size: 52px;
-      animation: pop .8s ease-in-out infinite alternate;
-    }
-    @keyframes pop{
-      from { transform: scale(1); }
-      to { transform: scale(1.07); }
+    .small{
+      font-size: 15px;
+      opacity: 0.85;
+      font-weight: 650;
     }
 
     /* confetti */
@@ -151,88 +160,125 @@
 
 <body>
   <div class="card" id="card">
-    <div class="sticker">💖</div>
-    <h1 class="title">Hey <span class="aida">Aida</span> 😳</h1>
+    <div class="sticker">💌</div>
+    <h1 class="title">Hey <span class="aida">Aida</span></h1>
     <p class="subtitle">
-      I have a very important question...
+      I have a small question for you…
       <br><br>
-      Will you be my <b>Valentine</b>? 💌
+      Will you be my <b>Valentine</b>? 🌷
     </p>
 
     <div class="buttons" id="btnArea">
-      <button id="yesBtn">YES 💘</button>
-      <button id="noBtn">No 🙄</button>
+      <button id="yesBtn">Yes</button>
+      <button id="noBtn">No</button>
     </div>
 
     <div class="result" id="result">
-      <div class="big">YEEEEESSS!!! 🥹💞</div>
-      <div>Officially the cutest Valentine ever 💘</div>
-      <div class="tiny">(Screenshot this and send it to me 😌)</div>
+      <div class="big">Yay 💞</div>
+      <div class="small">Okay… now I’m smiling like an idiot.</div>
     </div>
   </div>
 
   <script>
-    // Floating hearts background
-    const heartEmojis = ["💗","💖","💘","💕","💞","💓","💝"];
+    // Subtle floating hearts
+    const heartEmojis = ["♡","♥","✿","❀","❤"];
     function spawnHeart(){
       const h = document.createElement("div");
       h.className = "heart";
       h.textContent = heartEmojis[Math.floor(Math.random()*heartEmojis.length)];
       h.style.left = Math.random()*100 + "vw";
-      h.style.animationDuration = (5 + Math.random()*5) + "s";
-      h.style.fontSize = (18 + Math.random()*22) + "px";
+      h.style.animationDuration = (7 + Math.random()*6) + "s";
+      h.style.fontSize = (14 + Math.random()*18) + "px";
       document.body.appendChild(h);
-      setTimeout(()=>h.remove(), 11000);
+      setTimeout(()=>h.remove(), 14000);
     }
-    setInterval(spawnHeart, 250);
+    setInterval(spawnHeart, 450);
 
     const noBtn = document.getElementById("noBtn");
     const yesBtn = document.getElementById("yesBtn");
     const btnArea = document.getElementById("btnArea");
     const result = document.getElementById("result");
 
-    function moveNoButton(){
-      const rect = btnArea.getBoundingClientRect();
+    let escapeMode = false;
 
-      // Button size
+    function enableEscapeModeIfNeeded() {
+      if (escapeMode) return;
+      escapeMode = true;
+
+      // Switch to absolute positioning but keep it visually in the same place
+      const areaRect = btnArea.getBoundingClientRect();
+      const btnRect  = noBtn.getBoundingClientRect();
+
+      const left = (btnRect.left - areaRect.left);
+      const top  = (btnRect.top  - areaRect.top);
+
+      noBtn.classList.add("escape");
+      noBtn.style.left = left + "px";
+      noBtn.style.top  = top + "px";
+    }
+
+    function moveNoSmoothlyAway(pointerX, pointerY){
+      const rect = btnArea.getBoundingClientRect();
       const btnW = noBtn.offsetWidth;
       const btnH = noBtn.offsetHeight;
 
-      // Keep it inside the button area
+      // random position inside button area
       const padding = 6;
-      const maxX = rect.width - btnW - padding;
+      const maxX = rect.width  - btnW - padding;
       const maxY = rect.height - btnH - padding;
 
       let x = Math.random() * maxX;
       let y = Math.random() * maxY;
 
+      // If we have a pointer, try to move further from it (cute "dodging")
+      if (typeof pointerX === "number" && typeof pointerY === "number") {
+        const current = noBtn.getBoundingClientRect();
+        const cx = current.left + current.width/2;
+        const cy = current.top  + current.height/2;
+
+        // direction away from pointer
+        const dx = cx - pointerX;
+        const dy = cy - pointerY;
+        const mag = Math.max(1, Math.sqrt(dx*dx + dy*dy));
+        const ux = dx / mag;
+        const uy = dy / mag;
+
+        // push target away a bit
+        x = (current.left - rect.left) + ux * 120;
+        y = (current.top  - rect.top)  + uy * 80;
+
+        // clamp
+        x = Math.min(maxX, Math.max(padding, x));
+        y = Math.min(maxY, Math.max(padding, y));
+      }
+
       noBtn.style.left = x + "px";
-      noBtn.style.top = y + "px";
-      noBtn.style.transform = "none";
+      noBtn.style.top  = y + "px";
     }
 
-    // Make it nearly impossible: runs away on hover AND when mouse gets close
-    noBtn.addEventListener("mouseenter", moveNoButton);
-    noBtn.addEventListener("mousedown", moveNoButton);
-
-    btnArea.addEventListener("mousemove", (e) => {
-      const btn = noBtn.getBoundingClientRect();
-      const dx = e.clientX - (btn.left + btn.width/2);
-      const dy = e.clientY - (btn.top + btn.height/2);
-      const dist = Math.sqrt(dx*dx + dy*dy);
-
-      if(dist < 110) moveNoButton();
+    // Only run away when she tries to click / tap it
+    noBtn.addEventListener("mousedown", (e) => {
+      e.preventDefault();
+      enableEscapeModeIfNeeded();
+      moveNoSmoothlyAway(e.clientX, e.clientY);
     });
+
+    noBtn.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      const t = e.touches[0];
+      enableEscapeModeIfNeeded();
+      moveNoSmoothlyAway(t.clientX, t.clientY);
+    }, { passive:false });
 
     // YES button action
     function confettiBurst(){
-      for(let i=0;i<110;i++){
+      for(let i=0;i<90;i++){
         const c = document.createElement("div");
         c.className = "confetti";
         c.style.left = Math.random()*100 + "vw";
         c.style.animationDuration = (2 + Math.random()*2.5) + "s";
         c.style.transform = `translateY(0) rotate(${Math.random()*360}deg)`;
-        c.style.background = `hsl(${Math.random()*360}, 90%, 65%)`;
+        c.style.background = `hsl(${Math.random()*360}, 70%, 65%)`;
         c.style.width = (6 + Math.random()*8) + "px";
         c.style.height = (10 + Math.random()*14) + "px";
         document.body.appendChild(c);
@@ -244,13 +290,6 @@
       result.style.display = "block";
       btnArea.style.display = "none";
       confettiBurst();
-    });
-
-    // Put NO button in a nice start position
-    window.addEventListener("load", () => {
-      noBtn.style.top = "18px";
-      noBtn.style.left = "63%";
-      noBtn.style.transform = "translateX(-50%)";
     });
   </script>
 </body>
